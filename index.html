@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="Code/globals.css" />
+    <link rel="stylesheet" href="Code/styles.css" />
+  </head>
+
+  <body>
+    <div class="iphone">
+      <div class="rectangle"></div>
+      <img class="plus_shape" src="Assests/PlusIcon.png" />
+
+      <!-- Circle Group -->
+      <div class="circle-group">
+        <div class="ellipse" data-video="Assests/Video1.mp4" data-rotate="90"></div>
+        <div class="ellipse" data-video="Assests/Video2.mp4" data-rotate="180"></div>
+        <div class="ellipse" data-video="Assests/Video3.mp4" data-rotate="270"></div>
+        <div class="ellipse" data-video="Assests/Video4.mp4" data-rotate="360"></div>
+      </div>
+
+           <!-- Background Video -->
+      <video
+        id="mainVideo"
+        class="background-video"
+        autoplay
+        muted
+        loop
+        playsinline
+      >
+        <source src="Assests/staticloop.mp4" type="video/mp4" />
+      </video>
+
+      <img class="unnamed" src="Assests/bar-code.jpg.webp" />
+      <div class="div"></div>
+      <div class="text-wrapper">SELECT A CIRCLE</div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const ellipses = document.querySelectorAll('.ellipse');
+        const plusIcon = document.querySelector('.plus_shape');
+        const video = document.getElementById('mainVideo');
+        const text = document.querySelector('text-wrapper');
+        const defaultVideo = 'Assests/staticloop.mp4';
+
+        ellipses.forEach((ellipse) => {
+          ellipse.addEventListener('mouseenter', function () {
+            const rotateDegrees = this.dataset.rotate;
+            const newVideo = this.dataset.video;
+
+            plusIcon.style.transform = `rotate(${rotateDegrees}deg)`;
+
+            if (!video.src.includes(newVideo)) {
+              video.src = newVideo;
+              video.load();
+              video.play();
+            }
+          });
+
+          ellipse.addEventListener('mouseleave', function () {
+            plusIcon.style.transform = 'rotate(0deg)';
+            video.src = defaultVideo;
+            video.load();
+            video.play();
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
